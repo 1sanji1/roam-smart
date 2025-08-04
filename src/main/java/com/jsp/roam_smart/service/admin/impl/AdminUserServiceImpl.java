@@ -1,6 +1,7 @@
 package com.jsp.roam_smart.service.admin.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,15 @@ public class AdminUserServiceImpl implements AdminUserService {
    public List<User> getUserDetails() {
     return userRepository.findByRole(User.Role.MEMBER);
 }
+
+    @Override
+    public Optional<User> fetchByEmail(String param) {
+        return userRepository.findByEmail(param);
+    }
+
+    @Override
+    public Optional<User> fetchByPhone(String phone) {
+        return userRepository.findByPhone(phone);
+    }
     
 }
