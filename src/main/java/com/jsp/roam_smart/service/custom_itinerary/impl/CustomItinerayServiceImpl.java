@@ -69,7 +69,7 @@ public class CustomItinerayServiceImpl implements CustomItinerayService {
                 Then give:
                 Total Estimated Cost: ₹xxxx
 
-                Do not return JSON, markdown, or any code block. Just plain text. Keep it clear and readable also mention total cost at the last.
+                Do not return JSON, markdown, or any code block. Just plain text. Keep it clear and readable also mention total cost at the last. also dont mention things like "Sure, I can help you plan a 3-day trip to Bangalore within your budget of ₹10,000. Here's a possible itinerary:" start from day 1 etc. also add a section at the end as "disclamer:" at the end "Please note that the prices mentioned above are estimates and may vary. It's recommended to check the prices beforehand.".
                 """.formatted(days, place, budget, selectedPlacesPrompt);
 
         String requestBody = """
