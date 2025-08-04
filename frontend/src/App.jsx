@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import HomePage from "./pages/Homepage";
 import ItineraryForm from "./components/ItineraryForm";
 import ItineraryResult from "./components/ItineraryResult";
+import Error from "./pages/Error";
 
 function App() {
   const rawToken = localStorage.getItem("token");
