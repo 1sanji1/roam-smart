@@ -30,9 +30,8 @@ public class CustomItinerayServiceImpl implements CustomItinerayService {
             throw new IllegalArgumentException("Invalid input for itinerary generation");
         }
 
-        System.out.println("📥 Generating itinerary for place: " + place + ", budget: ₹" + budget + ", days: " + days);
         if (selectedPlaces != null && !selectedPlaces.isEmpty()) {
-            System.out.println("📌 Selected places: " + String.join(", ", selectedPlaces));
+            System.out.println("Selected places: " + String.join(", ", selectedPlaces));
         }
 
         String url = "https://openrouter.ai/api/v1/chat/completions";
