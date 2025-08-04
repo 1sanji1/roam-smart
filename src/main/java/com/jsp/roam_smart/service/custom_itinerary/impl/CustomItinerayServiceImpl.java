@@ -26,12 +26,10 @@ public class CustomItinerayServiceImpl implements CustomItinerayService {
 
     @Override
     public String getCustomItineray(String place, Long budget, int days, List<String> selectedPlaces) {
-        // ✅ Input Validation
         if (place == null || place.trim().isEmpty() || budget == null || budget <= 0 || days <= 0) {
             throw new IllegalArgumentException("Invalid input for itinerary generation");
         }
 
-        // ✅ Debug log for inputs
         System.out.println("📥 Generating itinerary for place: " + place + ", budget: ₹" + budget + ", days: " + days);
         if (selectedPlaces != null && !selectedPlaces.isEmpty()) {
             System.out.println("📌 Selected places: " + String.join(", ", selectedPlaces));
@@ -45,14 +43,12 @@ public class CustomItinerayServiceImpl implements CustomItinerayService {
         headers.set("User-Agent", "https://roamsmart.ai");
         headers.set("X-Title", "RoamSmart Itinerary Generator");
 
-        // 📌 Selected places prompt
         String selectedPlacesPrompt = "";
         if (selectedPlaces != null && !selectedPlaces.isEmpty()) {
             selectedPlacesPrompt = "Include these specific places in the plan if possible: "
                     + String.join(", ", selectedPlaces) + ". ";
         }
 
-        // 📋 Prompt construction
         String prompt = """
                 Plan a %d-day trip to %s under ₹%d.
                 %s
@@ -100,13 +96,13 @@ public class CustomItinerayServiceImpl implements CustomItinerayService {
 
             Map<String, Object> body = response.getBody();
             if (body == null || !body.containsKey("choices")) {
-                System.err.println("❌ No choices received from OpenRouter.");
+                System.err.println(" No choices received from OpenRouter.");
                 return "No response received.";
             }
 
             List<Map<String, Object>> choices = (List<Map<String, Object>>) body.get("choices");
             if (choices.isEmpty()) {
-                System.err.println("❌ Empty choices list.");
+                System.err.println(" Empty choices list.");
                 return "No content received.";
             }
 
@@ -115,7 +111,7 @@ public class CustomItinerayServiceImpl implements CustomItinerayService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "⚠️ Failed to generate itinerary: " + e.getMessage();
+            return " Failed to generate itinerary: " + e.getMessage();
         }
     }
 }
