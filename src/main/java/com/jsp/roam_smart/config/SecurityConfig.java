@@ -31,33 +31,6 @@ public class SecurityConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/v3/api-docs",
-                    "/v3/api-docs/**",
-                    "/swagger-ui.html",
-                    "/swagger-ui/**",
-                    "/swagger-resources/**",
-                    "/webjars/**",
-                    "/api/auth/**",
-                    "/error",
-                    "/api/place-search/**",
-                    "/api/weather/**",
-                    "/api/updates/**"
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
-            .sessionManagement(sess -> sess
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            );
-
-        return http.build();
-    }
     @Autowired
 private JwtAuthFilter jwtAuthFilter;
 
@@ -74,9 +47,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
                 "/swagger-resources/**",
                 "/webjars/**",
                 "/api/auth/**",
-                "/error",
-                "/api/place-search/**"
-                // "/api/weather/**"
+                "/error"
             ).permitAll()
             .anyRequest().authenticated()
         )
