@@ -9,9 +9,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.jsp.roam_smart.dto.ItinerarySaveRequestDTO;
+import com.jsp.roam_smart.model.Itinerary;
+import com.jsp.roam_smart.model.User;
+import com.jsp.roam_smart.repository.ItineraryRepository;
+import com.jsp.roam_smart.repository.UserRepository;
 import com.jsp.roam_smart.service.custom_itinerary.CustomItinerayService;
 import org.springframework.http.HttpMethod;
 
@@ -20,6 +26,12 @@ public class CustomItinerayServiceImpl implements CustomItinerayService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ItineraryRepository itineraryRepository;
 
     @Value("${openrouter.api.key}")
     private String apiKey;
@@ -113,4 +125,15 @@ public class CustomItinerayServiceImpl implements CustomItinerayService {
             return " Failed to generate itinerary: " + e.getMessage();
         }
     }
+    
+    @Override
+    public ItinerarySaveRequestDTO saveItinerary(ItinerarySaveRequestDTO request) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+
+        Itinerary itinerary = Itinerary.builder().user(user).mainPlace(request.getMainPlace()).budget(request.getBudget()).days(request.getDays()).itinerary(request.getItinerary()).selectedPlaces(request.getSelectedPlaces()).build();
+        itineraryRepository.save(itinerary);
+        return request;
+    }
 }
+    

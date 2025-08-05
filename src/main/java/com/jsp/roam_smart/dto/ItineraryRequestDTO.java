@@ -9,10 +9,9 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItineraryRequest {
+public class ItineraryRequestDTO {
     private String mainPlace;
     private Long budget;
     private int days;
-    private int people;
     private List<String> selectedPlaces;
 }

@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Data                        
-@NoArgsConstructor            
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
-@Builder                      
+@Builder
 public class User {
 
     public enum Role {
@@ -40,6 +41,9 @@ public class User {
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Itinerary> itineraries;
 
     @PrePersist
     protected void onCreate() {
