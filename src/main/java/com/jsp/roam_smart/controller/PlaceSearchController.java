@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jsp.roam_smart.dto.ItineraryRequest;
+import com.jsp.roam_smart.dto.ItineraryRequestDTO;
+import com.jsp.roam_smart.dto.ItinerarySaveRequestDTO;
 import com.jsp.roam_smart.service.custom_itinerary.CustomItinerayService;
 import com.jsp.roam_smart.service.search_place.PlaceAround;
 
@@ -50,9 +51,9 @@ public class PlaceSearchController {
     //     map.put("custom itinerary",customItinerayService.getCustomItineray(place, budget, days) );
     //     return ResponseEntity.status(200).body(map);
     // }
-    @PostMapping("/custom-itinerary")
+    @PostMapping("/itinerary/generate")
     @PreAuthorize("hasRole('MEMBER') or hasRole('ADMIN')")
-    public ResponseEntity<Map<String, Object>> generateItinerary(@RequestBody ItineraryRequest request) {
+    public ResponseEntity<Map<String, Object>> generateItinerary(@RequestBody ItineraryRequestDTO request) {
     Map<String, Object> map = new LinkedHashMap<>();
         
     String itinerary = customItinerayService.getCustomItineray(
@@ -61,11 +62,22 @@ public class PlaceSearchController {
         request.getDays(),
         request.getSelectedPlaces()
     );
-
     map.put("message", "Custom itinerary generated successfully.");
-    map.put("custom itinerary", itinerary);
+    map.put("mainPlace", request.getMainPlace());
+    map.put("budget", request.getBudget());
+    map.put("days", request.getDays());
+    map.put("selectedPlaces", request.getSelectedPlaces());
+    map.put("itinerary", itinerary);
     return ResponseEntity.status(200).body(map);
-}
+    }
+    @PostMapping("/itinerary/save")
+    public ResponseEntity<Map<String, Object>> postMethodName(@RequestBody ItinerarySaveRequestDTO request) {
+        Map<String,Object> map=new LinkedHashMap<>();
+        map.put("message", "Added record successfully");
+        map.put("record", customItinerayService.saveItinerary(request));
+        return ResponseEntity.status(201).body(map);
+    }
+    
 
     
 }
