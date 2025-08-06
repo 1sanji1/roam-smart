@@ -1,5 +1,6 @@
 package com.jsp.roam_smart.controller;
 
+import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jsp.roam_smart.dto.ItineraryRequestDTO;
 import com.jsp.roam_smart.dto.ItinerarySaveRequestDTO;
+import com.jsp.roam_smart.model.Itinerary;
 import com.jsp.roam_smart.service.custom_itinerary.CustomItinerayService;
 import com.jsp.roam_smart.service.search_place.PlaceAround;
 
@@ -78,6 +80,18 @@ public class PlaceSearchController {
         return ResponseEntity.status(201).body(map);
     }
     
+   @GetMapping("/itinerary/saved")
+    @PreAuthorize("hasRole('MEMBER') or hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Object>> getSavedItineraries(Principal principal) {
+        String email = principal.getName();
 
+        List<Itinerary> itineraries = customItinerayService.getSavedItineraries(email);
+
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("message", "Fetched saved itineraries.");
+        response.put("data", itineraries);
+
+        return ResponseEntity.ok(response);
+    }
     
 }
