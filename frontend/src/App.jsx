@@ -14,7 +14,7 @@ import HomePage from "./pages/Homepage";
 import ItineraryForm from "./components/ItineraryForm";
 import ItineraryResult from "./components/ItineraryResult";
 import Error from "./pages/Error";
-
+import History from "./components/History";
 function App() {
   const rawToken = localStorage.getItem("token");
   const token =
@@ -72,6 +72,7 @@ function App() {
             )
           }
         />
+        <Route path="/history" element={<History />} />
         <Route path="*" element={<Error></Error>}></Route>;
       </Routes>
     </Router>

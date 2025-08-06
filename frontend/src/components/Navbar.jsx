@@ -1,8 +1,8 @@
 // src/components/Navbar.jsx
-import React from 'react';
-import logo from '../images/RoamSmart Logo.png';
-import '../css/navbar.css';
-
+import React from "react";
+import logo from "../images/RoamSmart Logo.png";
+import "../css/navbar.css";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <nav className="navbar">
@@ -14,11 +14,11 @@ const Navbar = () => {
         <li>
           <a href="#home">Home</a>
         </li>
-        <li>
+        {/* <li>
           <a href="#search-places">Explore</a>
-        </li>
+        </li> */}
         <li>
-          <a href="#generate-itinerary">Itinerary</a>
+          <Link to="/history">Itinerary History</Link>
         </li>
         <li>Logout</li>
       </ul>

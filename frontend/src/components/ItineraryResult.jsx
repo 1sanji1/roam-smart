@@ -8,6 +8,7 @@ const ItineraryResult = () => {
   const [itinerary, setItinerary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [saveStatus, setSaveStatus] = useState("");
 
   if (!state)
     return <p className="itinerary-error">No itinerary data provided.</p>;
@@ -29,7 +30,7 @@ const ItineraryResult = () => {
         };
 
         const res = await axios.post(
-          "/api/place-search/custom-itinerary",
+          "/api/place-search/itinerary/generate",
           payload,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -46,18 +47,34 @@ const ItineraryResult = () => {
     fetchItinerary();
   }, [place, selectedPlaces, budget, days, people]);
 
+  const handleSave = async () => {
+    setSaveStatus("Saving...");
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(
+        "/api/place-search/itinerary/save",
+        itinerary, // send back the entire response from generate
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setSaveStatus("Itinerary saved successfully!");
+    } catch (err) {
+      console.error(err);
+      setSaveStatus("Failed to save itinerary.");
+    }
+  };
+
   if (loading)
     return <div className="itinerary-loading">Generating itinerary...</div>;
   if (error) return <div className="itinerary-error">{error}</div>;
   if (!itinerary)
     return <div className="itinerary-error">No itinerary received.</div>;
 
-  // Extract raw text (fallback) and attempt to split structured part if present
   const rawText = itinerary.itinerary || itinerary["custom itinerary"] || "";
   let humanReadable = rawText;
   let structured = null;
 
-  // If you ever append a separator like ---JSON--- with JSON after it, attempt to split
   const separator = "---JSON---";
   if (rawText.includes(separator)) {
     const [before, after] = rawText.split(separator);
@@ -65,7 +82,6 @@ const ItineraryResult = () => {
     try {
       structured = JSON.parse(after.trim());
     } catch (e) {
-      // ignore parse error, keep humanReadable only
       console.warn("Failed to parse structured JSON part:", e);
     }
   }
@@ -94,7 +110,6 @@ const ItineraryResult = () => {
 
       <div className="plan-box">
         {structured ? (
-          // If structured data is present, render per day
           structured.dayPlans ? (
             structured.dayPlans.map((day, idx) => (
               <div key={idx} className="day-block">
@@ -111,7 +126,7 @@ const ItineraryResult = () => {
                   {day.visits &&
                     day.visits.map((v, vi) => (
                       <div key={vi}>
-                        • {v.name} {v.entryFee ? `(Entry: ${v.entryFee})` : ""}{" "}
+                        • {v.name} {v.entryFee ? `(Entry: ₹${v.entryFee})` : ""}{" "}
                         — {v.description || ""}
                       </div>
                     ))}
@@ -144,7 +159,6 @@ const ItineraryResult = () => {
           </pre>
         )}
 
-        {/* Cost breakdown if available */}
         {structured && structured.breakdown && (
           <div className="cost-breakdown">
             <div className="section">
@@ -163,6 +177,13 @@ const ItineraryResult = () => {
             )}
           </div>
         )}
+      </div>
+
+      <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+        <button className="primary-btn" onClick={handleSave}>
+          Save Itinerary
+        </button>
+        {saveStatus && <p className="helper-text">{saveStatus}</p>}
       </div>
     </div>
   );
