@@ -1,4 +1,5 @@
 RoamSmart
+
 RoamSmart is an intelligent itinerary planning and trip management platform designed to help users generate and save personalized travel itineraries based on their preferences such as budget, days of travel, and selected destinations.
 
 🚀 Features
