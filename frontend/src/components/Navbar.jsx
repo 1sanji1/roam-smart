@@ -1,9 +1,19 @@
 // src/components/Navbar.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../images/RoamSmart Logo.png";
 import "../css/navbar.css";
 import { Link } from "react-router-dom";
+
 const Navbar = () => {
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("userName");
+    if (storedName) {
+      setUserName(storedName);
+    }
+  }, []);
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -11,16 +21,9 @@ const Navbar = () => {
         <span className="brand-name">RoamSmart</span>
       </div>
       <ul className="nav-links">
-        <li>
-          <Link to="/homepage">Home</Link>
-        </li>
-        {/* <li>
-          <a href="#search-places">Explore</a>
-        </li> */}
-        <li>
-          <Link to="/history">Itinerary History</Link>
-        </li>
-        <li>Logout</li>
+        <li><span className="user-name">Hi, {userName}</span></li>
+        <li><Link to="/history">Saved Itineraries</Link></li>
+        <li><Link to="/login">Logout</Link></li>
       </ul>
     </nav>
   );

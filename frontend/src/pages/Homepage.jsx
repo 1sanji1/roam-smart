@@ -8,22 +8,24 @@ const HomePage = () => {
   return (
     <div className="homepage">
       <Navbar />
-      <main className="home-content" id="home">
-        {/* <h2>Welcome to RoamSmart</h2>
-        <p className="subtitle">Start exploring or generate your perfect itinerary.</p> */}
+      <main className="home-content">
+        <section className="hero-section">
+          <h1 className="hero-title">Discover. Plan. Roam Smart.</h1>
+          <p className="hero-subtitle">Your smart travel companion for curated adventures.</p>
+        </section>
 
-        <div className="feature-box" id="search-places">
-          {/* <h3>Search Places Around</h3>
-          <p>A search bar to fetch weather and nearby attractions...</p> */}
+        <section className="search-section">
           <SearchPlaces />
-        </div>
+        </section>
 
-        <div className="feature-box small-box" id="generate-itinerary">
-          <h3>Generate Itinerary</h3>
-          <p>
-            Input budget, days, and destination to get a detailed travel plan...
-          </p>
-        </div>
+        <section className="itinerary-highlight">
+          <div className="itinerary-box">
+            <h3>Generate Itinerary</h3>
+            <p>
+              Input destination, budget, days and people – get your personalized plan instantly!
+            </p>
+          </div>
+        </section>
       </main>
     </div>
   );

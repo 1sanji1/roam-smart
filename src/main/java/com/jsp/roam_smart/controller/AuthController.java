@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jsp.roam_smart.config.JwtTokenProvider;
 import com.jsp.roam_smart.dto.UserDTO;
+import com.jsp.roam_smart.model.User;
 import com.jsp.roam_smart.model.User.Role;
 import com.jsp.roam_smart.service.AuthService;
 import jakarta.mail.MessagingException;
@@ -57,11 +58,20 @@ public class AuthController {
         String email = loginData.get("email");
         String password = loginData.get("password");
 
-        String result = authService.login(email, password); // returns success or throws
-        Role role=authService.getRoleUser(email); 
+        // String result = authService.login(email, password); // returns success or
+        // throws
+        // Role role=authService.getRoleUser(email);
+        User user = authService.login(email, password);
+        Role role = user.getRole(); // or authService.getRoleUser(email);
+
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("message", result);
-        map.put("token", jwtTokenProvider.generateToken(email, role.toString())); // Add this later if you implement JWT
+        // map.put("message", result);
+        // map.put("token", jwtTokenProvider.generateToken(email, role.toString())); //
+        // Add this later if you implement JWT
+        map.put("message", "Login successful");
+        map.put("token", jwtTokenProvider.generateToken(email, role.toString()));
+        map.put("name", user.getName());
+        map.put("email", user.getEmail()); // optional
 
         return ResponseEntity.ok(map);
     }
