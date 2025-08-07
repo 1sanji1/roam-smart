@@ -25,9 +25,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/verify-otp" element={<Otp />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/verify-otp" element={<Otp />} />
+        <Route path="/register" element={<Register />} />
         <Route
           path="/homepage"
           element={
@@ -72,7 +73,20 @@ function App() {
             )
           }
         />
-        <Route path="/history" element={<History />} />
+        <Route
+          path="/history"
+          element={
+            token ? (
+              <History />
+            ) : (
+              <Navigate
+                to="/login"
+                replace
+                state={{ message: "Login required to view history." }}
+              />
+            )
+          }
+        />
         <Route path="*" element={<Error></Error>}></Route>;
       </Routes>
     </Router>

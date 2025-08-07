@@ -21,9 +21,23 @@ const Navbar = () => {
         <span className="brand-name">RoamSmart</span>
       </div>
       <ul className="nav-links">
-        <li><span className="user-name">Hi, {userName}</span></li>
-        <li><Link to="/history">Saved Itineraries</Link></li>
-        <li><Link to="/login">Logout</Link></li>
+        <li>
+          <span className="user-name">Hi, {userName}</span>
+        </li>
+        <li>
+          <Link to="/history">Saved Itineraries</Link>
+        </li>
+        <li>
+          <Link
+            to="/"
+            onClick={() => {
+              localStorage.removeItem("userName");
+              localStorage.removeItem("token");
+            }}
+          >
+            Logout
+          </Link>
+        </li>
       </ul>
     </nav>
   );

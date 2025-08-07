@@ -54,7 +54,7 @@ const Error = () => {
             transition: "background 0.2s, color 0.2s",
           }}
         >
-          Go Back to Register
+          Go Back to Login Page?
         </a>
       </div>
     </div>
