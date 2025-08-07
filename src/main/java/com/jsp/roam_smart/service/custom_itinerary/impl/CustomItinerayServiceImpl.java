@@ -104,7 +104,7 @@ public class CustomItinerayServiceImpl implements CustomItinerayService {
                     entity,
                     Map.class
             );
-
+            System.out.println(response);
             Map<String, Object> body = response.getBody();
             if (body == null || !body.containsKey("choices")) {
                 System.err.println(" No choices received from OpenRouter.");

@@ -39,7 +39,20 @@
   align-items: center;
   flex-direction: column;
 }
+.small-box {
+  padding: 0.1rem 0.5rem;
+}
 
+.small-box h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.1rem;
+}
+
+.small-box p {
+  font-size: 0.8rem;
+  margin: 0;
+  line-height: 1.1;
+}
 .feature-box:hover {
   transform: translateY(-5px);
 }

@@ -18,7 +18,7 @@ const HomePage = () => {
           <SearchPlaces />
         </div>
 
-        <div className="feature-box" id="generate-itinerary">
+        <div className="feature-box small-box" id="generate-itinerary">
           <h3>Generate Itinerary</h3>
           <p>
             Input budget, days, and destination to get a detailed travel plan...
