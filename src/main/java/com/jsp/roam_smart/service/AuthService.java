@@ -84,7 +84,19 @@ public class AuthService {
         }
     }
 
-    public String login(String email, String rawPassword) {
+    // public String login(String email, String rawPassword) {
+    // User user = userRepository.findByEmail(email)
+    // .orElseThrow(() -> new BadRequestException("Invalid email or password"));
+
+    // if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+    // throw new BadRequestException("Invalid email or password");
+    // }
+
+    // // Optional: Generate JWT token here if needed
+
+    // return "Login successful!";
+    // }
+    public User login(String email, String rawPassword) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new BadRequestException("Invalid email or password"));
 
@@ -92,9 +104,7 @@ public class AuthService {
             throw new BadRequestException("Invalid email or password");
         }
 
-        // Optional: Generate JWT token here if needed
-
-        return "Login successful!";
+        return user;
     }
 
     public Role getRoleUser(String email) {

@@ -1,31 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-/* * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  height: 100vh;
-  background: linear-gradient(135deg, #1124cb, #cedffb);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-} */
 
 .reg-layout {
   display: flex;
-  width: 1000px;
-  height: 600px;
+  width: 1200px;
+  height: 650px;
   background: white;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 1.5s ease;
 }
 
-.reg-left, .reg-right {
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.reg-left,
+.reg-right {
   width: 50%;
   padding: 40px;
   display: flex;
@@ -35,29 +34,48 @@ body {
 }
 
 .reg-right {
-  background: linear-gradient(to bottom right, #4facfe, #00f2fe);
-  color: white;
+  background: linear-gradient(135deg, #1e2a5a, #16508f);
+  color: #f8f9fa;
   text-align: center;
+  transition: background 0.3s ease;
 }
 
 .reg-right h1 {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
 }
 
 .reg-right p {
   font-size: 15px;
-  margin-top: 10px;
+  margin-top: 8px;
+  opacity: 0.85;
+}
+
+.reg-right img {
+  width: 120px;
+  margin-bottom: 20px;
+  animation: pulseLogo 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseLogo {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
 }
 
 .form-wrapper {
   width: 100%;
-  max-width: 320px;
+  max-width: 330px;
 }
 
 .form-wrapper h2 {
   margin-bottom: 25px;
-  color: #222;
+  color: #1e2a5a;
   font-weight: 600;
   font-size: 22px;
   text-align: center;
@@ -66,52 +84,48 @@ body {
 form input {
   width: 100%;
   padding: 12px 15px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #ced4da;
   font-size: 14px;
-  transition: 0.3s;
+  background: #f8f9fa;
+  transition: 0.3s ease;
 }
 
 form input:focus {
   outline: none;
-  border-color: #2575fc;
-  box-shadow: 0 0 5px #6a11cb88;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+  background-color: white;
 }
 
 form button {
   width: 100%;
   padding: 12px;
-  background: #2575fc;
+  background: #007bff;
   border: none;
   color: white;
-  font-weight: bold;
+  font-weight: 600;
   border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 form button:hover {
-  background: #1d5ee2;
-}
-
-.msg {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 14px;
-  color: green;
+  background: #0056b3;
+  transform: translateY(-2px);
 }
 
 .login-redirect {
   text-align: center;
-  margin-top: 15px;
+  margin-top: 20px;
   font-size: 14px;
   color: #555;
 }
 
 .login-redirect a {
-  color: #2575fc;
+  color: #007bff;
   text-decoration: none;
   font-weight: 500;
 }
@@ -119,7 +133,3 @@ form button:hover {
 .login-redirect a:hover {
   text-decoration: underline;
 }
-
-
-
-

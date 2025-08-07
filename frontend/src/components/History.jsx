@@ -72,6 +72,11 @@ const History = () => {
           </div>
         )}
       </div>
+      <div className="go-back-wrapper">
+        <button className="go-back-btn" onClick={() =>window.history.back()}>
+        ← Go Back
+        </button>
+      </div>
     </div>
   );
 };

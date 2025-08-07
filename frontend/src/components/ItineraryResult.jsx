@@ -185,6 +185,13 @@ const ItineraryResult = () => {
         </button>
         {saveStatus && <p className="helper-text">{saveStatus}</p>}
       </div>
+      <div className="go-back-wrapper">
+        <button className="go-back-btn" onClick={() =>window.history.back()}>
+        ← Go Back
+        </button>
+      </div>
+
+
     </div>
   );
 };
