@@ -9,25 +9,35 @@ import org.springframework.stereotype.Service;
 import com.jsp.roam_smart.model.User;
 import com.jsp.roam_smart.repository.UserRepository;
 import com.jsp.roam_smart.service.admin.AdminUserService;
+
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
 
     @Autowired
-    private UserRepository userRepository; 
+    private UserRepository userRepository;
 
     @Override
-   public List<User> getUserDetails() {
-    return userRepository.findByRole(User.Role.MEMBER);
-}
+    public List<User> getUserDetails() {
+        return userRepository.findByRole(User.Role.MEMBER);
+    }
 
+    // @Override
+    // public Optional<User> fetchByEmail(String param) {
+    // return userRepository.findByEmail(param);
+    // }
+
+    // @Override
+    // public Optional<User> fetchByPhone(String phone) {
+    // return userRepository.findByPhone(phone);
+    // }
     @Override
-    public Optional<User> fetchByEmail(String param) {
-        return userRepository.findByEmail(param);
+    public List<User> fetchByEmail(String param) {
+        return userRepository.findByEmailContainingIgnoreCase(param);
     }
 
     @Override
-    public Optional<User> fetchByPhone(String phone) {
-        return userRepository.findByPhone(phone);
+    public List<User> fetchByPhone(String phone) {
+        return userRepository.findByPhoneContaining(phone);
     }
-    
+
 }

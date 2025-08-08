@@ -1,0 +1,127 @@
+.admin-dashboard {
+  width: 100%;
+  min-height: 100vh;
+   background: linear-gradient(180deg, #f7f7f8,#65c5da );
+  font-family: 'Inter', sans-serif;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.admin-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #004aad, #00cfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.admin-subtitle {
+  font-size: 1rem;
+  color: #4a5975;
+  margin-top: 0.5rem;
+}
+
+.admin-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.admin-search {
+  padding: 10px 15px;
+  width: 280px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.admin-search:focus {
+  border-color: #00cfff;
+  box-shadow: 0 0 8px rgba(0, 207, 255, 0.4);
+}
+
+.admin-search-btn,
+.admin-viewall-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #004aad, #00cfff);
+  color: #fff;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.admin-search-btn:hover,
+.admin-viewall-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 74, 173, 0.3);
+}
+
+.admin-table-container {
+  width: 100%;
+  max-width: 1000px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 18px 48px -12px rgba(0, 74, 173, 0.15);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.admin-table th {
+  background: #f4f6fb;
+  color: #004aad;
+  font-weight: 700;
+}
+
+.admin-table tr {
+  transition: background-color 0.3s ease;
+}
+
+.admin-delete-btn {
+  padding: 6px 12px;
+  background: #ff4d4d;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.admin-delete-btn:hover {
+  background: #e63b3b;
+}
+
+.no-users {
+  text-align: center;
+  color: #999;
+}
+
+.admin-loading {
+  font-size: 1.2rem;
+  color: #666;
+  text-align: center;
+  padding-top: 50px;
+}

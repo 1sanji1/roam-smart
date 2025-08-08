@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../css/login.css";
 import logo from "../images/RoamSmart Logo.png";
+import {jwtDecode} from "jwt-decode"
 
 const Login = () => {
   const location = useLocation();
@@ -27,6 +28,8 @@ const Login = () => {
     try {
       const response = await axios.post("/api/auth/login", { email, password });
       console.log(response.data);
+      const token = response.data.token;
+      const decoded = jwtDecode(token);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userName", response.data.name || email);
       setMessage("Login successful!");
@@ -34,7 +37,11 @@ const Login = () => {
 
       setTimeout(() => {
         setShowToast(false);
+        if (decoded.role === "ADMIN") {
+        navigate("/admin/dashboard");
+      } else {
         navigate("/homepage");
+      }
       }, 2000);
     } catch (err) {
       console.error(err);
@@ -69,8 +76,8 @@ const Login = () => {
                 {message}
               </p>
             )}
-            <p className="reg-redirect">
-              Don’t have an account? <a href="/">Register</a>
+            <p className="reg-redirect" >
+              Don’t have an account? <a href="/register">Register</a>
             </p>
           </div>
         </div>
