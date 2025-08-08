@@ -6,6 +6,8 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+
 import "./App.css"; // global styles
 import Register from "./pages/Register";
 import Otp from "./pages/Otp";
@@ -15,13 +17,45 @@ import ItineraryForm from "./components/ItineraryForm";
 import ItineraryResult from "./components/ItineraryResult";
 import Error from "./pages/Error";
 import History from "./components/History";
-function App() {
-  const rawToken = localStorage.getItem("token");
-  const token =
-    rawToken && rawToken !== "undefined" && rawToken !== "null"
-      ? rawToken
-      : null;
+import AdminDashboard from "./pages/AdminDashboard"; // create this page
 
+// Helper: verify token and role
+const getDecodedToken = () => {
+  const rawToken = localStorage.getItem("token");
+  if (!rawToken || rawToken === "undefined" || rawToken === "null") return null;
+  try {
+    return jwtDecode(rawToken);
+  } catch (e) {
+    console.error("Invalid token", e);
+    return null;
+  }
+};
+
+// Private route for logged-in users
+const PrivateRoute = ({ children }) => {
+  const decoded = getDecodedToken();
+  if (!decoded) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ message: "Please log in to continue." }}
+      />
+    );
+  }
+  return children;
+};
+
+// Private route for admins only
+const AdminPrivateRoute = ({ children }) => {
+  const decoded = getDecodedToken();
+  if (!decoded || decoded.role !== "ADMIN") {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
+
+function App() {
   return (
     <Router>
       <Routes>
@@ -29,65 +63,53 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/verify-otp" element={<Otp />} />
         <Route path="/register" element={<Register />} />
+
+        {/* User routes */}
         <Route
           path="/homepage"
           element={
-            token ? (
+            <PrivateRoute>
               <HomePage />
-            ) : (
-              <Navigate
-                to="/login"
-                replace
-                state={{ message: "Please log in to access the homepage." }}
-              />
-            )
+            </PrivateRoute>
           }
         />
         <Route
           path="/generate-itinerary"
           element={
-            token ? (
+            <PrivateRoute>
               <ItineraryForm />
-            ) : (
-              <Navigate
-                to="/login"
-                replace
-                state={{
-                  message: "You need to be logged in to generate an itinerary.",
-                }}
-              />
-            )
+            </PrivateRoute>
           }
         />
         <Route
           path="/itinerary-result"
           element={
-            token ? (
+            <PrivateRoute>
               <ItineraryResult />
-            ) : (
-              <Navigate
-                to="/login"
-                replace
-                state={{ message: "Login required to view itinerary results." }}
-              />
-            )
+            </PrivateRoute>
           }
         />
         <Route
           path="/history"
           element={
-            token ? (
+            <PrivateRoute>
               <History />
-            ) : (
-              <Navigate
-                to="/login"
-                replace
-                state={{ message: "Login required to view history." }}
-              />
-            )
+            </PrivateRoute>
           }
         />
-        <Route path="*" element={<Error></Error>}></Route>;
+
+        {/* Admin routes */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminPrivateRoute>
+              <AdminDashboard />
+            </AdminPrivateRoute>
+          }
+        />
+
+        {/* Catch-all */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </Router>
   );

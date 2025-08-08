@@ -6,12 +6,19 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.jsp.roam_smart.model.User;
+
 @Service
 public interface AdminUserService {
 
     public List<User> getUserDetails();
 
-    public Optional<User> fetchByEmail(String param);
+    // Search by email (partial match, case-insensitive)
+    public List<User> fetchByEmail(String param);
 
-    public Optional<User> fetchByPhone(String phone);   
+    // Search by phone (partial match)
+    public List<User> fetchByPhone(String phone);
+
+    // public Optional<User> fetchByEmail(String param);
+
+    // public Optional<User> fetchByPhone(String phone);
 }
