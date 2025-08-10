@@ -19,9 +19,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByPhone(String phone);
 
-    // 🔹 New methods for partial search
-    List<User> findByEmailContainingIgnoreCase(String email);
-
     List<User> findByPhoneContaining(String phone);
+
+    User findByEmailIgnoreCase(String parm);
+
+    List<User> findByEmailContainingIgnoreCase(String param);
 
 }

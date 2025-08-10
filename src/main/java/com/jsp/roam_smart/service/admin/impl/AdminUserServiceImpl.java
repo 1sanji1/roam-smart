@@ -40,4 +40,13 @@ public class AdminUserServiceImpl implements AdminUserService {
         return userRepository.findByPhoneContaining(phone);
     }
 
+    @Override
+    public void deleteUser(String parm) {
+        
+        User user=(User) userRepository.findByEmailIgnoreCase(parm);
+
+        userRepository.deleteById(user.getId());
+
+    }
+
 }

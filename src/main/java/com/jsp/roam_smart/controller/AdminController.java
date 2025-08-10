@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,5 +42,17 @@ public class AdminController {
         }
 
         return ResponseEntity.status(200).body(map);
+    }
+    @DeleteMapping("/users")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Map<String, Object>> deleteUser(@RequestParam(required = false) String email){
+        Map<String,Object> map=new LinkedHashMap<>();
+        map.put("message", "user is deleted");
+        
+        
+            adminUserService.deleteUser(email); 
+        
+        return ResponseEntity.ok().body(map);
+
     }
 }

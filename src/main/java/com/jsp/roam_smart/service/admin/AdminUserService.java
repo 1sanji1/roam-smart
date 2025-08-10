@@ -18,6 +18,8 @@ public interface AdminUserService {
     // Search by phone (partial match)
     public List<User> fetchByPhone(String phone);
 
+    public void deleteUser(String parm);
+
     // public Optional<User> fetchByEmail(String param);
 
     // public Optional<User> fetchByPhone(String phone);

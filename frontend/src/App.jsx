@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-import "./App.css"; // global styles
+import "./App.css";
 import Register from "./pages/Register";
 import Otp from "./pages/Otp";
 import Login from "./pages/Login";
@@ -17,9 +17,8 @@ import ItineraryForm from "./components/ItineraryForm";
 import ItineraryResult from "./components/ItineraryResult";
 import Error from "./pages/Error";
 import History from "./components/History";
-import AdminDashboard from "./pages/AdminDashboard"; // create this page
+import AdminDashboard from "./pages/AdminDashboard";
 
-// Helper: verify token and role
 const getDecodedToken = () => {
   const rawToken = localStorage.getItem("token");
   if (!rawToken || rawToken === "undefined" || rawToken === "null") return null;
@@ -31,7 +30,6 @@ const getDecodedToken = () => {
   }
 };
 
-// Private route for logged-in users
 const PrivateRoute = ({ children }) => {
   const decoded = getDecodedToken();
   if (!decoded) {
@@ -46,7 +44,6 @@ const PrivateRoute = ({ children }) => {
   return children;
 };
 
-// Private route for admins only
 const AdminPrivateRoute = ({ children }) => {
   const decoded = getDecodedToken();
   if (!decoded || decoded.role !== "ADMIN") {
@@ -64,7 +61,6 @@ function App() {
         <Route path="/verify-otp" element={<Otp />} />
         <Route path="/register" element={<Register />} />
 
-        {/* User routes */}
         <Route
           path="/homepage"
           element={
@@ -98,7 +94,6 @@ function App() {
           }
         />
 
-        {/* Admin routes */}
         <Route
           path="/admin/dashboard"
           element={
@@ -108,7 +103,6 @@ function App() {
           }
         />
 
-        {/* Catch-all */}
         <Route path="*" element={<Error />} />
       </Routes>
     </Router>

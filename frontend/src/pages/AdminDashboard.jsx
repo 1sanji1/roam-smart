@@ -55,15 +55,19 @@ const AdminDashboard = () => {
     }
   };
 
-  const deleteUser = async (userId) => {
+  const deleteUser = async (email) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`/api/admin/users/${userId}`, {
+        await axios.delete(`/api/admin/users`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          params: { email },
         });
-        setUsers((prev) => prev.filter((u) => u._id !== userId));
+        setUsers((prev) => prev.filter((u) => u.email !== email));
       } catch (err) {
-        console.error(err);
+        console.error(
+          "Error deleting user:",
+          err.response?.data || err.message
+        );
         alert("Failed to delete user");
       }
     }
@@ -149,7 +153,7 @@ const AdminDashboard = () => {
                     <td>
                       <button
                         className="admin-delete-btn"
-                        onClick={() => deleteUser(user._id)}
+                        onClick={() => deleteUser(user.email)}
                       >
                         Delete
                       </button>
