@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,10 +13,14 @@ import com.jsp.roam_smart.dto.LatLonDTO;
 import com.jsp.roam_smart.dto.PlaceAroundDetailsDTO;
 import com.jsp.roam_smart.service.search_place.PlaceAround;
 import com.jsp.roam_smart.service.search_place.PlaceService;
+
 @Service
 public class PlaceAroundImpl implements PlaceAround {
     @Autowired 
     private RestTemplate restTemplate;
+
+    @Value("${geoapipy.api.key}")
+    private String key;
 
     @Autowired
     private PlaceService placeService;
@@ -25,8 +30,8 @@ public class PlaceAroundImpl implements PlaceAround {
         double lat = Double.parseDouble(latLonDTO.getLat());
         double lon = Double.parseDouble(latLonDTO.getLon());
         
-        String key="47329c160313456095d0db4227c9015a";            //${GEOAPIFY_API};-Macha not woing for now hardcode key
-        String url="https://api.geoapify.com/v2/places?categories=tourism.attraction&filter=circle:"+lon+","+lat+",50000&limit=10&apiKey="+key;
+         //${GEOAPIFY_API};-Macha not woing for now hardcode key
+        String url="https://api.geoapify.com/v2/places?categories=tourism.attraction&filter=circle:"+lon+","+lat+",50000&limit=20&apiKey="+key;
 
         Map<String, Object> response = restTemplate.getForObject(url, Map.class);
         List<Map<String, Object>> features = (List<Map<String, Object>>) response.get("features");
